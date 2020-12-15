@@ -1,0 +1,110 @@
+<nav class="navbar direction-ltr fixed-top header-responsive">
+    <div class="container">
+        <div class="navbar-translate">
+            <a class="navbar-brand" href="/">
+                <img src="assets/img/logo.png" style="height: 36px;" alt="">
+            </a>
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                data-target="#navigation" aria-controls="navigation-index" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-bar bar1"></span>
+                <span class="navbar-toggler-bar bar2"></span>
+                <span class="navbar-toggler-bar bar3"></span>
+            </button>
+            <div class="search-nav default">
+                <form action="/search" method="GET">
+                    <input type="text" name="query" placeholder="جستجو ...">
+                    <input type="text" style="display: none;" name="filter" id="filter" value="Doctors">
+                    <button type="submit"><img src="assets/img/search.png" alt=""></button>
+                </form>
+                <ul>
+                    <% if(user=="") { %>
+                    <li><a href="/signup?from=/"><i class="now-ui-icons users_single-02"></i></a></li>
+                    <% } else {  %>
+                    <li><a href="/UserPanel/profile"><i class="now-ui-icons users_single-02"></i></a></li>
+                    <% } %> 
+                </ul>
+            </div>
+        </div>
+
+        <div class="collapse navbar-collapse justify-content-end" id="navigation">
+            <div class="logo-nav-res default text-center">
+                <a href="#">
+                    <img src="assets/img/logo.png" height="36px" alt="">
+                </a>
+            </div>
+            <ul class="navbar-nav default">
+                <li class="sub-menu">
+                    <a href="#"> رزرو نوبت</a>
+                    <ul>
+                        <% for(let i=0 ; i < categories.length;i++) { %>
+                        <li>
+                            <a href="<%= "/category/"+categories[i].name.split(' ').join('-')+"?city=all" %>"><%= categories[i].name %>
+                            </a>
+                        </li>
+                        <% } %>
+                    </ul>
+                </li>
+                <li>
+                    <a href="/healthcenters">بانک سلامت</a>
+                </li>
+
+                <li>
+                    <a href="/consultant">مشاوره آنلاین</a>
+                </li>
+                <li class="sub-menu">
+                    <a href="#"> پنل مدیریت</a>
+                    <ul>
+                        <li>
+                            <a href="/logindoc">دکتر ها</a>
+                        </li>
+                        <li>
+                            <a href="/loginHC">آزمایشگاه ها</a>
+                        </li>
+                        <li>
+                            <a href="/loginHC">سونوگرافی ها</a>
+                        </li>
+                        <li>
+                            <a href="/loginHC">کلینیک ها</a>
+                        </li>
+                        <li>
+                            <a href="/loginHC">داروخانه ها</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="sub-menu">
+                    <a href="#"> ثبت نام</a>
+                    <ul>
+                        <li>
+                            <a href="/doctorsignup">دکتر ها</a>
+                        </li>
+                        <li>
+                            <a href="/labsignup">آزمایشگاه ها</a>
+                        </li>
+                        <li>
+                            <a href="/labsignup">سونوگرافی ها</a>
+                        </li>
+                        <li>
+                            <a href="/clinicsignup">کلینیک ها</a>
+                        </li>
+                        <li>
+                            <a href="/pharmacysignup">داروخانه ها</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="https://shop.drtajviz.com">فروشگاه </a>
+                </li>
+                <li>
+                    <a href="https://shop.drtajviz.com/mag/"> مجله پزشکی</a>
+                </li>
+                <li>
+                    <a href="https://shop.drtajviz.com/aboutus/">درباره ما </a>
+                </li>
+                <li>
+                    <a href="https://shop.drtajviz.com/contact-us/"> تماس با ما </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
