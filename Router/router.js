@@ -6829,12 +6829,12 @@ router.post('/signup', function (req, res) {
   req.session.prevurl = req.session.currurl;
   req.session.currurl = req.url;
   request({
-    url: "https://www.google.com/recaptcha/api/siteverify?secret=6Lce7sgZAAAAABlVY5VbfAHr589PRWY-ZgtPRXt9&response=" + req.body["g-recaptcha-response"],
+    url: "https://www.google.com/recaptcha/api/siteverify?secret=6Le7Mx0aAAAAAJadYSFOw8rXPGALcihvkRkss_WO&response=" + req.body["g-recaptcha-response"],
     method: "POST",
     json: true,   // <--Very important!!!
     body: {
       response: req.body.captcha,
-      secret: "6Lce7sgZAAAAABlVY5VbfAHr589PRWY-ZgtPRXt9"
+      secret: "6Le7Mx0aAAAAAJadYSFOw8rXPGALcihvkRkss_WO"
     }
   }, (error, response, body) => {
     if (error) {
