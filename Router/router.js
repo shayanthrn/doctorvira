@@ -68,38 +68,6 @@ function categories() {
 //------------------------api------------------------------//
 
 
-router.get("/testpayment", function (req, res) {
-  request({
-    url: "https://fcp.shaparak.ir/ref-payment/RestServices/mts/generateTokenWithNoSign/",
-    method: "POST",
-    json: true,
-    body: {
-      "WSContext": { "UserId": "21918395", "Password": "21918395" },
-      "TransType": "EN_GOODS",
-      "ReserveNum": "FanAvaTest123",
-      "Amount": "1007",
-      "RedirectUrl": "https://reservation.drtajviz.com/testtest",
-    }
-  }, (error, response, body) => {
-    console.log(body);
-    if (body.Result == "erSucceed") {
-      res.render("continuepayment.ejs", { token: body.Token });
-      res.end();
-    }
-    else {
-      console.log("test");
-    }
-  })
-})
-
-
-router.post("/testtest", function (req, res) {
-  console.log("this is post test test");
-  console.log(req.body);
-})
-
-
-
 router.get("/api/getAlltypesofHC", function (req, res) {
   var query = url.parse(req.url, true).query;
   if (query.key != "pouyarahmati") {
@@ -5442,6 +5410,38 @@ router.get("/", function (req, res) {
     var dbo = db.db("mydb");
     if (req.cookies.usertoken == undefined) {
       categories().then(basiccategories => {
+        res.render('index2.ejs', {user: "", categories: basiccategories });
+        res.end();
+        db.close();
+      })
+    }
+    else {
+      dbo.collection("Users").findOne({ token: req.cookies.usertoken }, function (err, result) {
+        if (err) throw err;
+        if (result == null) {
+          res.clearCookie('usertoken');
+          res.redirect('/');
+        }
+        categories().then(basiccategories => {
+          res.render('index2.ejs', {user: result, categories: basiccategories });
+          res.end();
+          db.close();
+        })
+      })
+    }
+  })
+})
+
+
+router.get("/category",function(req,res){
+  req.session.prevurl = req.session.currurl;
+  req.session.currurl = req.url;
+  Categories = [];
+  MongoClient.connect(dburl, function (err, db) {
+    if (err) throw err;
+    var dbo = db.db("mydb");
+    if (req.cookies.usertoken == undefined) {
+      categories().then(basiccategories => {
         res.render('index.ejs', { Objects: basiccategories, type: "category", category: "", user: "", categories: basiccategories });
         res.end();
         db.close();
@@ -5463,7 +5463,6 @@ router.get("/", function (req, res) {
     }
   })
 })
-
 
 router.get("/consultant", function (req, res) {
   req.session.prevurl = req.session.currurl;
@@ -7109,6 +7108,11 @@ router.get('/exit', function (req, res) {
     res.redirect('/');
     res.end();
   })
+})
+
+router.get("/notimp",function(req,res){
+  res.render("notimp.ejs");
+  res.end();
 })
 
 
